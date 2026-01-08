@@ -1,0 +1,12 @@
+2026-01-08 22:12:29,127 | INFO | System monitor execution started
+2026-01-08 22:12:29,496 | ERROR | Command failed: top -bn1 | grep 'Cpu(s)'
+2026-01-08 22:12:29,496 | ERROR | CPU parsing error
+2026-01-08 22:12:29,611 | ERROR | Command failed: free | grep Mem
+2026-01-08 22:12:29,612 | ERROR | Memory parsing error
+2026-01-08 22:12:29,705 | ERROR | Command failed: df / | tail -1
+2026-01-08 22:12:29,706 | ERROR | Disk parsing error
+2026-01-08 22:12:29,762 | ERROR | Command failed: who
+2026-01-08 22:12:29,892 | ERROR | Command failed: grep 'Failed password' /var/log/auth.log 2>/dev/null | tail -n 5
+2026-01-08 22:12:29,933 | INFO | Reports generated successfully
+2026-01-08 22:12:29,934 | INFO | CPU=0.0% MEM=0.0% DISK=0%
+2026-01-08 22:12:29,945 | INFO | STATUS={'cpu': 'OK', 'memory': 'OK', 'disk': 'OK'}

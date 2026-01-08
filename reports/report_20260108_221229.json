@@ -1,0 +1,13 @@
+{
+    "timestamp": "2026-01-08 22:12:29.706371",
+    "cpu_usage_percent": 0.0,
+    "memory_usage_percent": 0.0,
+    "disk_usage_percent": 0,
+    "status": {
+        "cpu": "OK",
+        "memory": "OK",
+        "disk": "OK"
+    },
+    "logged_in_users": "",
+    "failed_logins": ""
+}
