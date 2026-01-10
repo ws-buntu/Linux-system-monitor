@@ -1,0 +1,17 @@
+Cron Job Setup
+STEP 1: GET FULL PYTHON PATH
+    which python3
+
+STEP 2: EDIT CRONTAB
+    crontab -e 
+
+STEP 3: SCHEDULE THE JOB (EVERY X MINUTES)
+    */X * * * * /usr/bin/python3 /absolute/path/to/the/script
+
+CHECK REPORTS
+    ls reports/
+
+CHECK LOGS
+    tail -f logs/monitor.log
+
+
