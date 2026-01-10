@@ -27,3 +27,5 @@ A Python automation tool that collects system health metrics and basic security 
 
 ```bash
 python3 monitor.py
+streamlit run dashboard.py
+
