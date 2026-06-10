@@ -5,10 +5,21 @@ import json
 import subprocess
 import logging
 from datetime import datetime
+import smtplib
+from email.message import EmailMessage
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 REPORT_DIR = os.path.join(BASE_DIR, "reports")
 LOG_DIR = os.path.join(BASE_DIR, "logs")
+EMAIL_ENABLED = True
+
+SMTP_SERVER = "smtp.gmail.com"
+SMTP_PORT = 587
+
+EMAIL_SENDER = "your_email@gmail.com"
+EMAIL_PASSWORD = "your_app_password"
+EMAIL_RECEIVER = "alert_receiver@gmail.com"
 
 CPU_THRESHOLD = 80
 MEM_THRESHOLD = 75
@@ -75,6 +86,24 @@ def generate_reports():
         "disk": check_threshold(disk, DISK_THRESHOLD)
     }
 
+    alerts = []
+
+    for key, value in status.items():
+        if value == "ALERT":
+            alerts.append(f"{key.upper()} threshold exceeded")
+
+    if alerts and EMAIL_ENABLED:
+        email_body = (
+        "System Alert Triggered\n\n"
+        + "\n".join(alerts)
+        + f"\n\nCPU: {cpu}%\nMemory: {mem}%\nDisk: {disk}%"
+        )
+    send_alert_email(
+        subject="🚨 SYSTEM ALERT – Linux Monitor",
+        body=email_body
+    )
+
+
     report_data = {
         "timestamp": str(datetime.now()),
         "cpu_usage_percent": cpu,
@@ -100,6 +129,25 @@ def generate_reports():
     logging.info("Reports generated successfully")
     logging.info(f"CPU={cpu}% MEM={mem}% DISK={disk}%")
     logging.info(f"STATUS={status}")
+
+def send_alert_email(subject, body):
+    try:
+        msg = EmailMessage()
+        msg["From"] = EMAIL_SENDER
+        msg["To"] = EMAIL_RECEIVER
+        msg["Subject"] = subject
+        msg.set_content(body)
+
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()
+            server.login(EMAIL_SENDER, EMAIL_PASSWORD)
+            server.send_message(msg)
+
+        logging.info("Alert email sent successfully")
+
+    except Exception as e:
+        logging.error(f"Email alert failed: {e}")
+
 
 if __name__ == "__main__":
     generate_reports()
